@@ -3,6 +3,11 @@ from sys import argv
 power_per_turn = 5
 power_per_move = 10
 
+ROTATE_BY_180 = 2
+ROTATE_BY_90 = 1
+INITIAL_ROTATION=0
+NO_ROTATION=0
+
 
 def main():
     sX = 0
@@ -67,117 +72,114 @@ def calculate_power_spent(relative_dx, relative_dy, dir):
     elif relative_dy == 0 and relative_dx > 0:
         power_spent += remaining_power_pos_x(relative_dx, dir)
 
-    elif relative_dx == 0 and relative_dy == 0:
-        power_spent += 0
-
     return power_spent
 
 
 def remaining_power_first_quad(relative_dx, relative_dy, dir):
-    total_moves = 0
-    turns = 0
+    total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+    turns = INITIAL_ROTATION
     if dir == "N" or dir == "E":
         turns += power_per_turn
-        total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+        
     if dir == "S" or dir == "W":
-        turns += 2 * power_per_turn
-        total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+        turns += ROTATE_BY_180 * power_per_turn
+        
     return turns + total_moves
 
 
 def remaining_power_second_quad(relative_dx, relative_dy, dir):
-    total_moves = 0
-    turns = 0
+    total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+    turns = INITIAL_ROTATION
     if dir == "N" or dir == "W":
         turns += power_per_turn
-        total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+        
     if dir == "S" or dir == "E":
-        turns += 2 * power_per_turn
-        total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+        turns += ROTATE_BY_180 * power_per_turn
+        
     return turns + total_moves
 
 
 def remaining_power_third_quad(relative_dx, relative_dy, dir):
-    total_moves = 0
-    turns = 0
+    total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+    turns = INITIAL_ROTATION
     if dir == "N" or dir == "E":
-        turns += 2 * power_per_turn
-        total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+        turns += ROTATE_BY_180 * power_per_turn
+        
     if dir == "S" or dir == "W":
         turns += power_per_turn
-        total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+        
     return turns + total_moves
 
 
 def remaining_power_fourth_quad(relative_dx, relative_dy, dir):
-    total_moves = 0
-    turns = 0
+    total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+    turns = INITIAL_ROTATION
     if dir == "N" or dir == "W":
-        turns += 2 * power_per_turn
-        total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+        turns += ROTATE_BY_180 * power_per_turn
+        
     if dir == "S" or dir == "E":
         turns += power_per_turn
-        total_moves = power_per_move * (abs(relative_dx) + abs(relative_dy))
+        
     return total_moves + turns
 
 
 def remaining_power_pos_y(relative_dy, dir):
-    total_moves = 0
-    turns = 0
+    total_moves = power_per_move * abs(relative_dy)
+    turns = INITIAL_ROTATION
     if dir == "N":
-        turns += 0
-        total_moves = power_per_move * abs(relative_dy)
+        turns += NO_ROTATION
+        
     if dir == "E" or dir == "W":
         turns += power_per_turn
-        total_moves = power_per_move * abs(relative_dy)
+        
     if dir == "S":
-        turns += 2 * power_per_turn
-        total_moves = power_per_move * abs(relative_dy)
+        turns += ROTATE_BY_180 * power_per_turn
+        
     return total_moves + turns
 
 
 def remaining_power_neg_y(relative_dy, dir):
-    total_moves = 0
-    turns = 0
+    total_moves = power_per_move * abs(relative_dy)
+    turns = INITIAL_ROTATION
     if dir == "S":
         turns += 0
-        total_moves = power_per_move * abs(relative_dy)
+        
     if dir == "E" or dir == "W":
         turns += power_per_turn
-        total_moves = power_per_move * abs(relative_dy)
+        
     if dir == "N":
-        turns += 2 * power_per_turn
-        total_moves = power_per_move * abs(relative_dy)
+        turns += ROTATE_BY_180 * power_per_turn
+        
     return total_moves + turns
 
 
 def remaining_power_neg_x(relative_dx, dir):
-    total_moves = 0
-    turns = 0
+    total_moves = power_per_move * abs(relative_dx)
+    turns = INITIAL_ROTATION
     if dir == "W":
-        turns += 0
-        total_moves = power_per_move * abs(relative_dx)
+        turns += NO_ROTATION
+        
     if dir == "N" or dir == "S":
         turns += power_per_turn
-        total_moves = power_per_move * abs(relative_dx)
+    
     if dir == "E":
-        turns += 2 * power_per_turn
-        total_moves = power_per_move * abs(relative_dx)
+        turns += ROTATE_BY_180 * power_per_turn
+    
     return total_moves + turns
 
 
 def remaining_power_pos_x(relative_dx, dir):
-    total_moves = 0
-    turns = 0
+    total_moves = power_per_move * abs(relative_dx)
+    turns = INITIAL_ROTATION
     if dir == "E":
-        turns += 0
-        total_moves = power_per_move * abs(relative_dx)
+        turns += NO_ROTATION
+        
     if dir == "N" or dir == "S":
         turns += power_per_turn
-        total_moves = power_per_move * abs(relative_dx)
+        
     if dir == "W":
-        turns += 2 * power_per_turn
-        total_moves = power_per_move * abs(relative_dx)
+        turns += ROTATE_BY_180 * power_per_turn
+
     return total_moves + turns
 
 
